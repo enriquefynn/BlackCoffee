@@ -1,0 +1,26 @@
+<ion-header>
+
+    <ion-navbar danger>
+        <ion-title>Black Coffee</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <button fab fab-bottom fab-center (click)="newUser()" style="z-index: 9999;"><ion-icon name="add"></ion-icon></button>
+    <ion-grid>
+    <ion-item-group>
+        <div *ngFor="let letter of alphabet">
+            <div *ngIf="users[letter] != undefined">
+                <ion-item-divider light>{{letter}}</ion-item-divider>
+                    <ion-item *ngFor="let user of users[letter]" (click)=openUser(user)>
+                        {{user.Name}}
+                    </ion-item>
+            </div>
+        </div>
+    </ion-item-group>
+    </ion-grid>
+    <button danger (click)="deleteDB()">Delete Local DB</button>
+</ion-content>
+

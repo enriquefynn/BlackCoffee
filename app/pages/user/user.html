@@ -1,0 +1,26 @@
+<ion-header>
+
+    <ion-navbar danger>
+        <ion-title>New User</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+    <ion-item>
+        <ion-label floating>Name</ion-label>
+        <ion-input [(ngModel)]="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input [(ngModel)]="email"></ion-input>
+    </ion-item>
+
+<button fab danger fab-bottom fab-right (click)="create()">
+    <ion-icon name="checkmark"></ion-icon>
+</button>
+
+
+</ion-content>
+
