@@ -1,5 +1,10 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, AlertController, ModalController} from 'ionic-angular';
+import {NavController,
+    NavParams,
+    AlertController,
+    ModalController,
+    Events,
+} from 'ionic-angular';
 import {DBProvider} from '../../providers/db-provider/db-provider';
 import {Home} from '../home/home';
 import {User} from '../user/user';
@@ -19,7 +24,8 @@ export class UserInfo {
                 nav : NavController, 
                 navParams : NavParams,
                 private alertCtrl: AlertController,
-                private modalCtrl: ModalController)
+                private modalCtrl: ModalController,
+                private events: Events)
     {
         this.nav = nav;
         this.user = navParams.get('user');
@@ -46,7 +52,11 @@ export class UserInfo {
                 return;
             this.dbProvider.insertCredit(this.user['Id'], data['value'])
             .then(d => {
+                return this.dbProvider.insertCreditBox(data['value']);
+            })
+            .then(d => {
                 console.log('Inserted', data['value'], 'into user', this.user['Id']);
+                this.events.publish('credit');
                 this.calculateCredit();
             })
             .catch(console.error);

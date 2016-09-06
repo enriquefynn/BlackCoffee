@@ -47,7 +47,6 @@ export class Home {
                 if (this.users[data.res.rows.item(i).Name[0]] === undefined)
                     this.users[data.res.rows.item(i).Name[0]] = [];
                 this.users[data.res.rows.item(i).Name[0]].push(data.res.rows.item(i));
-                console.log(data.res.rows.item(i).Name);
             }
 
             //Sort
@@ -56,7 +55,6 @@ export class Home {
                     this.users[this.alphabet[i]].sort((a, b) => {
                         return (a['Name'] < b['Name']) ? -1 : 1;
                     });
-            console.log(this.users);
         })
         .catch(console.error);
     }
@@ -66,7 +64,7 @@ export class Home {
         this.credit_box = 0.0;
         this.dbProvider.calculateCreditBox()
         .then(data => {
-            console.log(data);
+            console.log('Credit: ', data.res.rows.item(0));
             if (data.res.rows.length > 0 && 
                 data.res.rows.item(0).sum_credit !== null)
                 this.credit_box = data.res.rows.item(0).sum_credit.toFixed(2);
