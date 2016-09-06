@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
+import {NavController, NavParams, ModalController} from 'ionic-angular';
 import {Events} from 'ionic-angular';
 import {User} from '../user/user';
 import {UserInfo} from '../user_info/user_info';
 import {DBProvider} from '../../providers/db-provider/db-provider';
+import {ModalCurr} from '../modal_cur/modal_cur';
 
 @Component({
   templateUrl: 'build/pages/home/home.html',
@@ -19,6 +20,7 @@ export class Home {
 
     constructor(public dbProvider: DBProvider,
                 nav : NavController,
+                private modalCtrl: ModalController,
                 public events: Events)
     {
         this.nav = nav;
@@ -80,6 +82,22 @@ export class Home {
     public openUser(user_obj)
     {
         this.nav.push(UserInfo, {user: user_obj});
+    }
+
+    public broughtCoffee()
+    {
+        let modal = this.modalCtrl.create(ModalCurr);
+        modal.onDidDismiss(data => {
+            if (data == undefined)
+                return;
+            this.dbProvider.insertCreditBox(-data['value'])
+            .then(d => {
+                console.log('Took', data['value'], 'from box');
+                this.events.publish('credit');
+            })
+            .catch(console.error);
+        });
+        modal.present();
     }
 
 }

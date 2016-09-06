@@ -59,6 +59,12 @@ export class DBProvider
         return this.storage.query(sql, [id, Date.now()]);
     }
 
+    public calculateCoffees(id: number, cofffe_latte: string)
+    {
+        let sql = 'SELECT COUNT(*) as coffees FROM ' + cofffe_latte + ' WHERE UserId = ' + id
+        return this.storage.query(sql);
+    }
+
     public calculateCredit(id: number)
     {
         let sql = 'SELECT SUM(Credit) as sum_credit FROM CREDIT WHERE UserId = ' + id

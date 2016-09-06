@@ -19,6 +19,7 @@ export class UserInfo {
     nav : NavController;
     user: User;
     credit: number;
+    coffees: number = 0;
 
     constructor(public dbProvider: DBProvider, 
                 nav : NavController, 
@@ -30,6 +31,7 @@ export class UserInfo {
         this.nav = nav;
         this.user = navParams.get('user');
         this.calculateCredit();
+        this.calculateCoffees();
     }
     
     private calculateCredit()
@@ -85,6 +87,7 @@ export class UserInfo {
                 .then(data => {
                     console.log("User", this.user['Id'], "drank", option);
                     this.calculateCredit();
+                    this.coffees +=1;
                 })
                 .catch(console.error);
               }
@@ -92,5 +95,22 @@ export class UserInfo {
         ]
       });
       alert.present();
+    }
+
+    public calculateCoffees()
+    {
+        this.dbProvider.calculateCoffees(this.user['Id'], 'COFFEE')
+        .then(data =>{
+            if (data.res.rows.length > 0 && 
+                data.res.rows.item(0).coffees !== null)
+                this.coffees = data.res.rows.item(0).coffees;
+            return this.dbProvider.calculateCoffees(this.user['Id'], 'LATTE');
+        })
+        .then(data =>{
+            if (data.res.rows.length > 0 && 
+                data.res.rows.item(0).coffees !== null)
+                this.coffees += data.res.rows.item(0).coffees;
+            return this.dbProvider.calculateCoffees(this.user['Id'], 'LATTE');
+        });
     }
 }

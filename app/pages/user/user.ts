@@ -13,7 +13,7 @@ export class User {
     nav : NavController;
     name : string;
     email : string;
-
+   
     constructor(public dbProvider: DBProvider,
                 nav : NavController,
                 public events: Events)

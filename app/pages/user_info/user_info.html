@@ -7,13 +7,13 @@
 </ion-header>
 
 <ion-content>
-    <h1 style="text-align: center;">Credit: {{credit}}</h1>
+    <h1 style="text-align: center;">${{credit}}, <ion-icon name="cafe"></ion-icon>: {{coffees}}</h1>
     <br/>
     <div id="images">
         <img src="img/coffee.svg" height="20%" width="20%" class="logo" (click)="drink('coffee')"/>
         <img src="img/latte.svg" height="20%" width="20%" class="logo" (click)="drink('latte')"/>
     </div>
 
-    <button fab fab-bottom fab-center (click)="openDeposit()" style="z-index: 9999;"><ion-icon name="logo-usd"></ion-icon></button>
+    <button fab fab-bottom fab-center (click)="openDeposit()" style="z-index: 9999; position:fixed;"><ion-icon name="logo-usd"></ion-icon></button>
 </ion-content>
 

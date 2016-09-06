@@ -5,8 +5,8 @@
 </ion-header>
 
 <ion-content>
-    <ion-item>Estimated Credit: {{credit_box}} <button>Brought Coffee</button></ion-item>
-    <button fab fab-bottom fab-center (click)="newUser()" style="z-index: 9999;">
+    <ion-item>Estimated Credit: {{credit_box}} <button (click)="broughtCoffee()">Brought Coffee</button></ion-item>
+    <button fab fab-bottom fab-center (click)="newUser()" style="z-index: 9999; position:fixed;">
         <ion-icon name="add"></ion-icon>
     </button>
     <ion-grid>
@@ -14,12 +14,19 @@
         <div *ngFor="let letter of alphabet">
             <div *ngIf="users[letter] != undefined">
                 <ion-item-divider light>{{letter}}</ion-item-divider>
-                    <ion-item *ngFor="let user of users[letter]" (click)=openUser(user)>
-                        {{user.Name}}
-                    </ion-item>
+                <ion-item *ngFor="let user of users[letter]" (click)=openUser(user)>
+                    <ion-row>
+                        <ion-col width-80>
+                            {{user.Name}}
+                        </ion-col>
+                        <!--<ion-col width-20>
+                            <ion-icon name="cafe"></ion-icon> {{users[letter].coffees}}
+                        </ion-col> -->
+                    </ion-row>
+                </ion-item>
             </div>
         </div>
     </ion-item-group>
     </ion-grid>
-    <button danger (click)="deleteDB()">Delete Local DB</button>
+    <!--<button danger (click)="deleteDB()">Delete Local DB</button> -->
 </ion-content>
