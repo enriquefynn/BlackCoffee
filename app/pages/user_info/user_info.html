@@ -1,12 +1,19 @@
 <ion-header>
 
     <ion-navbar danger>
-        <ion-title>{{name}}</ion-title>
+        <ion-title>{{user.Name}}</ion-title>
     </ion-navbar>
 
 </ion-header>
 
 <ion-content>
-    USER {{user.Name}} {{user.Id}}
+    <h1 style="text-align: center;">Credit: {{credit}}</h1>
+    <br/>
+    <div id="images">
+        <img src="img/coffee.svg" height="20%" width="20%" class="logo" (click)="drink('coffee')"/>
+        <img src="img/latte.svg" height="20%" width="20%" class="logo" (click)="drink('latte')"/>
+    </div>
+
+    <button fab fab-bottom fab-center (click)="openDeposit()" style="z-index: 9999;"><ion-icon name="logo-usd"></ion-icon></button>
 </ion-content>
 

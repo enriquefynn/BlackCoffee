@@ -12,8 +12,9 @@ import {DBProvider} from '../../providers/db-provider/db-provider';
 
 export class Home {
     alphabet : Array<string> = ['A','B','C','D','E','F','G','H','I','J','K',
-        'L','M','N','O','P','Q','R','S','U','V','X','Y','Z'];
+        'L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
     users: {[key:string]:Array<User>} = {};
+    credit_box: number;
     nav : NavController;
 
     constructor(public dbProvider: DBProvider,
@@ -22,8 +23,12 @@ export class Home {
     {
         this.nav = nav;
         this.loadUsers();
-        this.events.subscribe('user:created', () => {
+        this.loadCredit();
+        this.events.subscribe('user', () => {
             this.loadUsers();
+        });
+        this.events.subscribe('credit', () => {
+            this.loadCredit();
         });
     }
 
@@ -53,7 +58,20 @@ export class Home {
                     });
             console.log(this.users);
         })
-        .catch(err => {console.error(err);});
+        .catch(console.error);
+    }
+    
+    private loadCredit()
+    {
+        this.credit_box = 0.0;
+        this.dbProvider.calculateCreditBox()
+        .then(data => {
+            console.log(data);
+            if (data.res.rows.length > 0 && 
+                data.res.rows.item(0).sum_credit !== null)
+                this.credit_box = data.res.rows.item(0).sum_credit.toFixed(2);
+        })
+        .catch(console.error);
     }
 
     public deleteDB()

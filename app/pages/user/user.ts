@@ -26,7 +26,7 @@ export class User {
         console.log('Creating user:', this.name, this.email);
         this.dbProvider.saveUser(this.name, this.email).then(data => {
             console.log(data);
-            this.events.publish('user:created');
+            this.events.publish('user');
             this.nav.pop();
 
         }).catch(err => {console.error(err);});
